@@ -1,0 +1,2 @@
+Hello, world!
+End of text
