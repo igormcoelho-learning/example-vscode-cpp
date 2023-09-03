@@ -1,6 +1,7 @@
 ## example-vscode-cpp
 
 Example project for VSCode using Devcontainers for C/C++.
+See Google Slides presentation [in Portuguese](https://docs.google.com/presentation/d/16Ls0adVYOygetNxCL3n7wOyIiMGIwbzFTCC2mnkxJaQ/edit?usp=sharing).
 
 If not using devcontainers, then:
 
