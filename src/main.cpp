@@ -1,6 +1,8 @@
 // SPDX-License-Identifier:  MIT
 // Copyright (C) 2023 - Prof. Igor Machado Coelho
 //
+// Online test: https://godbolt.org/z/dGfMGzGeW
+//
 #include <format>
 //
 // #include <fmt/core.h>

@@ -23,7 +23,7 @@ target_link_libraries(aplicacao PRIVATE fmt)
 endif()
 
 # ===== check if external catch2 library is used ===== 
-option(BUILD_TESTING "Build tests" OFF)
+# option(BUILD_TESTING "Build tests" ON)
 if(BUILD_TESTING)
 FetchContent_Declare(Catch2 GIT_REPOSITORY https://github.com/catchorg/Catch2.git GIT_TAG v3.3.1)
 FetchContent_MakeAvailable(Catch2)
