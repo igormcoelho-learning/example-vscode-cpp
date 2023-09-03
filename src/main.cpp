@@ -1,22 +1,20 @@
 // SPDX-License-Identifier:  MIT
 // Copyright (C) 2023 - Prof. Igor Machado Coelho
-#include <memory>
 //
-#include <fmt/core.h>  // NOLINT
-
+#include <format>
+//
+// #include <fmt/core.h>
+// using fmt::print;
+//
 #include <lista01/get_data.hpp>
 
-using fmt::print;
-
-struct XY {
-  int x;
-  int y;
-};
+// Solution using __VA_ARGS__ and VA_OPT (## from c++20)
+#define print(fmt, ...) \
+  printf("%s", std::format(fmt, ##__VA_ARGS__).c_str())
 
 int main() {
   print("{} {}! Curso em C/C++\n", "Olá", "Mundo");
   //
-  auto ptr = std::make_shared<XY>(XY{.x = 1, .y = 2});
   return 0;
 }
 

@@ -1,0 +1,17 @@
+## example-vscode-cpp
+
+Example project for VSCode using Devcontainers for C/C++.
+
+If not using devcontainers, then:
+
+1. Install basic Microsoft C/C++ extension `ms-vscode.cpptools-extension-pack` and allow it on configuration `.vscode/settings.json`:
+    * `"C_Cpp.intelliSenseEngine": "default",`
+1. Install cpplint extension `mine.cpplint`
+1. Install catch2 tests extension `matepek.vscode-catch2-test-adapter`
+
+If testing is desired, just update CMakeLists and make `BUILD_TESTING` to `ON`.
+If external fmt library is desired, just update CMakeLists and make `USE_EXTERNAL_FMT` to `ON`.
+
+## LICENSE
+
+MIT License

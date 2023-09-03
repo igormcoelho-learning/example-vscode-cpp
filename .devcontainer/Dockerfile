@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/cpp:0-ubuntu-22.04
-# LIST: https://mcr.microsoft.com/v2/vscode/devcontainers/cpp/tags/list
+
+# REFRESH!
+RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 
 # install pip (for cpplint and cmake)
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -13,56 +15,54 @@ RUN pip install --upgrade cmake
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
      && apt-get -y install --no-install-recommends software-properties-common
 
-# gcc-12
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-     && apt-get -y install --no-install-recommends g++-12 gcc-12
-
-# clangd, clang-format and clang-tidy (standard)
-#RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends clang-tidy clang-format clangd
-
-# clang-16
-RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-RUN echo "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main" >> /etc/apt/sources.list
-RUN echo "deb-src http://apt.llvm.org/jammy/ llvm-toolchain-jammy-16 main" >> /etc/apt/sources.list
+# clang newer
+#RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+RUN curl --proto '=https' --tlsv1.2 https://apt.llvm.org/llvm.sh -sSf | bash -s -- -y
 
 # clangd, clang-format and clang-tidy
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-     && apt-get -y install --no-install-recommends clang-tidy-16 clang-format-16 clangd-16
+     && apt-get -y install --no-install-recommends clang-tidy-17 clang-format-17 clangd-17
 
+# libc++ for clang (not using libstdc++ from gcc)
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-     && apt-get -y install --no-install-recommends  lldb-16  lld-16 libc++-16-dev libc++abi-16-dev
+     && apt-get -y install --no-install-recommends libc++-17-dev libc++abi-17-dev
 
-# =========== https://apt.llvm.org/ (Extras) ============
-# LLVM
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-     && apt-get -y install --no-install-recommends  libllvm-16-ocaml-dev libllvm16 llvm-16 llvm-16-dev llvm-16-doc llvm-16-examples llvm-16-runtime
+# install gcc 13 (latest)
 
-# clang
+# RUN sudo add-apt-repository ppa:ubuntu-toolchain-r/ppa -y
+RUN sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-     && apt-get -y install --no-install-recommends clang-16 clang-tools-16 clang-16-doc libclang-common-16-dev libclang-16-dev libclang1-16 clang-format-16 python3-clang-16 clangd-16 clang-tidy-16
+     && apt-get -y install --no-install-recommends g++-13 gcc-13
+
+# FORCE UPGRADE
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+     && apt-get -y upgrade
 
 # ===========
 
-# nodejs (for bazel)
-RUN curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-     && apt-get -y install --no-install-recommends nodejs 
+# install nvm (for npm)
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+RUN bash /root/.nvm/install.sh
 
-# bazel
-RUN npm install -g @bazel/bazelisk
+# install npm (using nvm)
+RUN bash -i -c "nvm install --lts"
+
+# bazel (using npm)
+RUN bash -i -c "npm install -g @bazel/bazelisk"
 
 # install cpplint into /usr/local/bin/cpplint
-RUN pip install cpplint 
+RUN python3 -m pip install cpplint 
 
 # bumpver (for versioning)
 RUN python3 -m pip install bumpver
 
 # default gcc-12
-RUN sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 10
-RUN sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 10
-# default clang-16
-RUN sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-16 10
-RUN sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-16 10
-RUN sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-16 10
-RUN sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-16 10
+RUN sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 10
+RUN sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 10
+# default clang-17
+RUN sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-17 10
+RUN sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-17 10
+RUN sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-17 10
+RUN sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-17 10
+RUN sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-17 10
+
