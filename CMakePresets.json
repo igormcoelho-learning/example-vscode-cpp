@@ -27,7 +27,6 @@
             },
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_TOOLCHAIN_FILE": "./build-conan/conan_toolchain.cmake"
             }
         },
         {
