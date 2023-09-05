@@ -21,7 +21,7 @@
 					"-log=verbose",
 					"-pretty",
 					"--background-index",
-					"--compile-commands-dir=${workspaceFolder}/build/",
+					"--compile-commands-dir=${workspaceFolder}/build/"
 				],
 				"editor.formatOnSave": true,
 				"testMate.cpp.test.advancedExecutables": [

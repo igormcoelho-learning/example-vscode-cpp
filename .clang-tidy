@@ -6,6 +6,7 @@ Checks: >
     performance-*,
     -cppcoreguidelines-avoid-magic-numbers,
     -google-readability-todo,
+    -cppcoreguidelines-pro-type-vararg,
     -performance-unnecessary-value-param,
     -google-readability-braces-around-statements,
     -cppcoreguidelines-non-private-member-variables-in-classes,
@@ -23,7 +24,3 @@ CheckOptions:
 FormatStyle: 'file'
 
 WarningsAsErrors: "*"
-
-# ignore protobuf and gRPC generated header (bug in union impl)
-# Code '(?<!' will start a negative look behind expression
-HeaderFilterRegex: 'bftevent.*(?<!\.pb\.h)$'
