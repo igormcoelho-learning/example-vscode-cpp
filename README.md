@@ -13,6 +13,14 @@ If not using devcontainers, then:
 If testing is desired, just update CMakeLists and make `BUILD_TESTING` to `ON`.
 If external fmt library is desired, just update CMakeLists and make `USE_EXTERNAL_FMT` to `ON`.
 
+## Using cxxbuild project
+
+The easiest way to build this is to just use [cxxbuild project](https://github.com/manydeps/cxxbuild):
+
+```
+python3 cxxbuild.py
+```
+
 ## LICENSE
 
 MIT License

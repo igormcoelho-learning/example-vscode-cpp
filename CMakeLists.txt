@@ -11,11 +11,16 @@ add_library(my_headers0 INTERFACE)
 target_include_directories(my_headers0 INTERFACE include/)
 target_link_libraries(main PRIVATE my_headers0)
 target_link_libraries(get_data.test PRIVATE my_headers0)
+add_library(my_headers1 INTERFACE)
+target_include_directories(my_headers1 INTERFACE build/_deps/fmt-src/include/)
+target_link_libraries(main PRIVATE my_headers1)
+target_link_libraries(get_data.test PRIVATE my_headers1)
 # begin dependencies from cxxdeps.txt
 # cxxdeps dependency fmt
 FetchContent_Declare(fmt GIT_REPOSITORY https://github.com/fmtlib/fmt.git GIT_TAG 9.1.0)
 FetchContent_MakeAvailable(fmt)
 target_link_libraries(my_headers0 INTERFACE fmt)
+target_link_libraries(my_headers1 INTERFACE fmt)
 target_link_libraries(main PRIVATE fmt)
 target_link_libraries(get_data.test PRIVATE fmt)
 # cxxdeps dependency Catch2
@@ -25,5 +30,6 @@ target_link_libraries(get_data.test PRIVATE Catch2::Catch2WithMain)
 # cxxdeps dependency m
 # system dependency: -lm
 target_link_libraries(my_headers0 INTERFACE m)
+target_link_libraries(my_headers1 INTERFACE m)
 target_link_libraries(main PRIVATE m)
 target_link_libraries(get_data.test PRIVATE m)
