@@ -10,6 +10,8 @@
 //
 #include <lista01/get_data.hpp>
 
+#include "something.h"
+
 // Solution using __VA_ARGS__ and VA_OPT (## from c++20)
 #define print(fmt, ...) \
   printf("%s", std::format(fmt, ##__VA_ARGS__).c_str())
